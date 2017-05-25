@@ -22,6 +22,8 @@ class NError extends Error {
         }
 
         super(...args);
+        if (Error.captureStackTrace)
+            Error.captureStackTrace(this, this.constructor);
         this.name = 'NError';
 
         this._parent = parent;
@@ -59,8 +61,8 @@ class NError extends Error {
     get info() {
         let loadInfo = error => {
             let info = error.parent ? loadInfo(error.parent) : {};
-            if (this._info)
-                Object.assign(info, this._info);
+            if (error._info)
+                Object.assign(info, error._info);
             return info;
         };
 
@@ -76,6 +78,23 @@ class NError extends Error {
         for (let parent = this.parent; parent; parent = parent.parent)
             result += `: ${parent.message}`
         return result;
+    }
+
+    /**
+     * Combined stack getter
+     * @type {string}
+     */
+    get fullStack() {
+        let result = [];
+        if (this.stack)
+            result.push(this.stack);
+
+        for (let parent = this.parent; parent; parent = parent.parent) {
+            if (parent.stack)
+                result.push(parent.stack);
+        }
+
+        return result.join('\n');
     }
 
     /**
