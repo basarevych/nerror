@@ -94,7 +94,7 @@ class NError extends Error {
                 result.push(parent.stack);
         }
 
-        return result.join('\n');
+        return result.length ? result.join('\n') : undefined;
     }
 
     /**
