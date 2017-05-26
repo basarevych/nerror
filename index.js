@@ -74,12 +74,16 @@ class NError extends Error {
      * @type {string}
      */
     get messages() {
-        let result = this.message || '';
+        let result = [];
+        if (this.message)
+            result.push(this.message);
+
         for (let parent = this.parent; parent; parent = parent.parent) {
             if (parent.message)
-                result += `: ${parent.message}`
+                result.push(parent.message);
         }
-        return result;
+
+        return result.length ? result.join(': ') : undefined;
     }
 
     /**
