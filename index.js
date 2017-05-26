@@ -74,9 +74,11 @@ class NError extends Error {
      * @type {string}
      */
     get messages() {
-        let result = this.message;
-        for (let parent = this.parent; parent; parent = parent.parent)
-            result += `: ${parent.message}`
+        let result = this.message || '';
+        for (let parent = this.parent; parent; parent = parent.parent) {
+            if (parent.message)
+                result += `: ${parent.message}`
+        }
         return result;
     }
 
