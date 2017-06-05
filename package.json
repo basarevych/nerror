@@ -1,9 +1,13 @@
 {
   "name": "nerror",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "license": "MIT",
   "author": "Ross Basarevych <basarevych@gmail.com>",
   "description": "Nested Error ES6 class",
+  "keywords": [
+    "nested",
+    "error"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/basarevych/nerror.git"
