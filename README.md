@@ -75,11 +75,11 @@ try {
 
 ### new NError([parent,] [info,] ...args)
 
-*parent* is optional parent error instance
+**parent** is optional parent error instance
 
-*info* is optional information attached to the error. it will be merged with parents' info objects
+**info** is optional information attached to the error. it will be merged with parents' info objects
 
-*...args* - rest is usual Error constructor arguments
+**...args** - rest is usual Error constructor arguments
 
 #### Examples
 
@@ -93,9 +93,13 @@ The following are all valid constructor calls:
 
 * new NError(new NError('Some error'), { key: 'value' }, 'Error occurred') // do both
 
+### .parent
+
+Parent error accessor
+
 ### .info
 
-Combined information created by merging *info*s of all the parent chain
+Combined information created by merging **info**s of all the parent chain
 
 ### .messages
 
@@ -104,3 +108,13 @@ Combined messages of all the parents
 ### .fullStack
 
 Combined stack info of all the parents
+
+### .toArray()
+
+Convert this error chain to an array. Consider the following example:
+```
+let err1 = new Error('1');
+let err2 = new NError(err1, '2');
+let err3 = new NError(err2, '3');
+```
+**err3.toArray()** will return: `[ err3, err2, err1 ]`
